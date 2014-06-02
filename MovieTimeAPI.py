@@ -16,8 +16,7 @@ def start(): #initializes a ffmpeg process
    subprocess.call(['killall','ffmpeg']) #to prevent any port overlap, killing all other ffmpeg processes                         
    if app.config['MOVIE_PROCESSOR']: #if the 'MOVIE_PROCESSOR' instance refers to something remove that reference                
         app.config['MOVIE_PROCESSOR'] =                                                                                  
-   current_run = ["./ffmpeg","-re","-i",app.config['CURRENT_VIDEO'],"-af","volume=1.9","-vcodec","libx264","-preset","ultrafast","
--tune","zerolatency","-acodec","aac","-strict","experimental","-ab","512k","-f","flv","rtmp://127.0.0.1:1935/videos/mv"]          
+   current_run = ["./ffmpeg","-re","-i",app.config['CURRENT_VIDEO'],"-af","volume=1.9","-vcodec","libx264","-preset","ultrafast","-tune","zerolatency","-acodec","aac","-strict","experimental","-ab","512k","-f","flv","rtmp://127.0.0.1:1935/videos/mv"]          
    app.config['MOVIE_PROCESSOR'] = subprocess.Popen(current_run) #sending that command to the command line                        
    return "-SERVER STARTED-" #helpful notification on web page                                                                    
                                                                                                                                   
