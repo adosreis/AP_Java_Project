@@ -29,8 +29,7 @@ def pause(): #pauses teh current ffmpeg process
                 app.config['MOVIE_PROCESSOR'].send_signal(signal.SIGSTOP) #then send a suspend signal to the process              
                 app.config['PAUSED'] = True                                                                                       
                 return "-SERVER PAUSED-" #helpful notification on webpage                                                         
-        app.config['MOVIE_PROCESSOR'].send_signal(signal.SIGCONT) #if 'PAUSED' isnt false or null a resume signal is sent to proce
-ss                                                                                                                                
+        app.config['MOVIE_PROCESSOR'].send_signal(signal.SIGCONT) #if 'PAUSED' isnt false or null a resume signal is sent to process                                                                                                                                
         app.config['PAUSED'] = False                                                                                              
         return "-SERVER UNPAUSED-" #helpful notification on webpage                                                               
                                                                                                                                   
@@ -41,8 +40,7 @@ def stop(): #completely terminates current fmpeg process
                                                                                                                                   
    if not app.config['MOVIE_PROCESSOR'].poll(): #sends a 'poll' to the 'MOVIE_PROCESS' which returns a null value if it is active 
 and something else if it isnt                                                                                                     
-        while not app.config['MOVIE_PROCESSOR'].poll(): #it will continue to try to terminate the process as long as it poll activ
-e                                                                                                                                 
+        while not app.config['MOVIE_PROCESSOR'].poll(): #it will continue to try to terminate the process as long as it poll active                                                                                                                                 
                 app.config['MOVIE_PROCESSOR'].kill() #sends a terminate command to the process                                    
                 return "-SERVER STOPPED-" #helpful notification on webpage                                                        
                                                                                                                                   
