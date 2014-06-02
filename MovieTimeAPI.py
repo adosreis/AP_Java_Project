@@ -4,8 +4,7 @@ import subprocess
 import signal                                                                                                                     
 import os                                                                                                                         
 import fnmatch                                                                                                                    
-import glob                                                                                                                       
-                                                                                                                                  
+
 app=Flask(__name__) #constructing app a new Flask Object                                                                          
 app.config['MOVIE_PROCESSOR'] = None #initializing what will be a movie processor instance field in the app's config lis          
 app.config['CURRENT_VIDEO'] = None #initializing what will be a storage for the current video to be played                        
