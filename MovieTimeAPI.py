@@ -47,35 +47,32 @@ and something else if it isnt
    return "-SERVER NOT RUNNING, NOTHING TO BE STOPPED-" #helpful notification on webpage if server isnt running in the first place
                                                                                                                                   
                                                                                                                                   
-@app.route('/videos')                                                                                                             
-def show_videos():                                                                                                                
-   vid_list = []                                                                                                                  
-   path = '.'
-     vid_list += [os.path.join(dirpath, f)
+@app.route('/videos')   #routeing the following function through 'andy.jokemd.com:5555/stop'                                                                                                            
+def show_videos():  #shows all videos                                                                                                           
+   vid_list = []   #defines a list                                                                                                            
+   path = '.' #the current directory path
+     vid_list += [os.path.join(dirpath, f) #the next 3 lines are a statement that fills a list with possible videos with '.mkv' extension
         for dirpath, dirnames, files in os.walk(path)
         for f in fnmatch.filter(files, '*.mkv')]
-   vid_list += [os.path.join(dirpath, f)
+   vid_list += [os.path.join(dirpath, f)   #the next 3 lines are a statement that fills a list with possible videos with '.mp4' extension
         for dirpath, dirnames, files in os.walk(path)
         for f in fnmatch.filter(files, '*.mp4')]
-   vid_list += [os.path.join(dirpath, f)                                                                                          
- 
+   vid_list += [os.path.join(dirpath, f)   #the next 3 lines are a statement that fills a list with possible videos with '.avi' extension                                                                                        
         for dirpath, dirnames, files in os.walk(path)                                                                             
- 
         for f in fnmatch.filter(files, '*.avi')]
-   keys= [x for x in range(1,len(vid_list))]
-   app.config['LOCAL_VIDEOS'] = dict(zip(keys,vid_list))
+   keys= [x for x in range(1,len(vid_list))] # makes a list with numbers for all videos
+   app.config['LOCAL_VIDEOS'] = dict(zip(keys,vid_list)) #makes a map or 'dict' with keys for each movie for accessing movies
    return str(app.config['LOCAL_VIDEOS'])
  
  
-@app.route('/videos/<int:video_number>')
-def change_video(video_number):
-   video_number = int(video_number)
-   if not app.config['MOVIE_PROCESSOR']:
-        if video_number in app.config['LOCAL_VIDEOS'].keys():
-                app.config['CURRENT_VIDEO'] = app.config['LOCAL_VIDEOS'][video_number]
-                return 'CURRENT VIDEO CHANGED TO \'%s\'' % app.config['LOCAL_VIDEOS'][video_number]
-        return '\'%s\' NOT IN VIDEO LIBRARY' % app.config['LOCAL_VIDEOS'][video_number]
-   return 'MOVIE CURRENTLY ACTIVE CANNOT CHANGE!'
+@app.route('/videos/<int:video_number>') #chooses the movie using a variable in the url
+def change_video(video_number): #changes the video to the video specified at the numbr_key spot in the dict
+   if not app.config['MOVIE_PROCESSOR']: #tests for activity
+        if video_number in app.config['LOCAL_VIDEOS'].keys(): #test to make sure key is possible
+                app.config['CURRENT_VIDEO'] = app.config['LOCAL_VIDEOS'][video_number] #chooses the video for the global program
+                return 'CURRENT VIDEO CHANGED TO \'%s\'' % app.config['LOCAL_VIDEOS'][video_number] #helpful notification on webpage 
+        return '\'%s\' NOT IN VIDEO LIBRARY' % app.config['LOCAL_VIDEOS'][video_number] #helpful notification on webpage 
+   return 'MOVIE CURRENTLY ACTIVE CANNOT CHANGE!' #helpful notification on webpage if server isnt running in the first place
  
 if __name__ =='__main__':  #main method                                                                                     
     app.run(debug=True, host='0.0.0.0', port=5555) #runs the app with specific parameters for server compatibility
