@@ -8,14 +8,14 @@ import fnmatch
 app=Flask(__name__) #constructing app a new Flask Object                                                                          
 app.config['MOVIE_PROCESSOR'] = None #initializing what will be a movie processor instance field in the app's config lis          
 app.config['CURRENT_VIDEO'] = None #initializing what will be a storage for the current video to be played                        
-app.config['PAUSED'] = False                                                                                                      
-app.config['LOCAL_VIDEOS'] = dict()                                                                                               
+app.config['PAUSED'] = False  #sets a instance for whether or not the video has been paused                                                                                                    
+app.config['LOCAL_VIDEOS'] = dict() #sets a instance for a map of all videos available                                                                                             
                                                                                                                                   
 @app.route('/start') #routeing the following function through 'andy.jokemd.com:5555/start'                                        
 def start(): #initializes a ffmpeg process                                                                                        
    subprocess.call(['killall','ffmpeg']) #to prevent any port overlap, killing all other ffmpeg processes                         
-   if app.config['MOVIE_PROCESSOR']: #if the 'MOVIE_PROCESSOR' instance refers to something, remove that reference                
-        app.config['MOVIE_PROCESSOR'] = None                                                                                      
+   if app.config['MOVIE_PROCESSOR']: #if the 'MOVIE_PROCESSOR' instance refers to something remove that reference                
+        app.config['MOVIE_PROCESSOR'] =                                                                                  
    current_run = ["./ffmpeg","-re","-i",app.config['CURRENT_VIDEO'],"-af","volume=1.9","-vcodec","libx264","-preset","ultrafast","
 -tune","zerolatency","-acodec","aac","-strict","experimental","-ab","512k","-f","flv","rtmp://127.0.0.1:1935/videos/mv"]          
    app.config['MOVIE_PROCESSOR'] = subprocess.Popen(current_run) #sending that command to the command line                        
